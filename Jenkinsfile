@@ -1,7 +1,7 @@
 pipeline {
     agent any
     tools {
-        git 'Default'
+        git 'Default' 
     }
     stages {
         stage('Checkout') {
@@ -11,16 +11,27 @@ pipeline {
         }
         stage('Setup Environment') {
             steps {
-                dir('/Users/shawnjoseph/.jenkins/workspace/selenium_test') {
-                    sh '/Users/shawnjoseph/.pyenv/bin/pyenv install --skip-existing 3.8.10'
-                    sh '/Users/shawnjoseph/.pyenv/bin/pyenv local 3.8.10'
-                    sh '/Users/shawnjoseph/.pyenv/versions/3.8.10/bin/pip install --no-cache-dir -r requirements.txt'
-                }
+                sh '''
+                    # Install pyenv and Python using a consistent method
+                    # This command will work as long as a base Python installation is available on the agent
+                    python3 -m pip install --user pyenv-virtualenv
+
+                    # Create a virtual environment for the project
+                    /usr/bin/python3 -m venv venv
+                    source venv/bin/activate
+
+                    # Install project dependencies
+                    pip install --no-cache-dir -r requirements.txt
+                '''
             }
         }
         stage('Run Selenium Tests') {
             steps {
-                sh '/Users/shawnjoseph/.pyenv/versions/3.8.10/bin/pytest'
+                sh '''
+                    # Activate the virtual environment before running tests
+                    source venv/bin/activate
+                    pytest
+                '''
             }
         }
     }
