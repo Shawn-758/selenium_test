@@ -18,7 +18,7 @@ pipeline {
                 // Sets the local Python version for this directory
                 sh '/usr/local/pyenv/bin/pyenv local 3.8.10'
                 // Installs the dependencies from your requirements file
-                sh 'pip install --no-cache-dir -r requirements.txt'
+                sh '/Users/shawnjoseph/.pyenv/versions/3.8.10/bin/pip install --no-cache-dir -r requirements.txt'
             }
         }
         stage('Run Selenium Tests') {
