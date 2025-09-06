@@ -10,19 +10,16 @@ pipeline {
             }
         }
         stage('Setup Environment') {
-            steps {
-                sh '''
-                    # Create a virtual environment directly in the workspace
-                    /usr/bin/python3 -m venv venv
-
-                    # Activate the virtual environment
-                    source venv/bin/activate
-
-                    # Install project dependencies
-                    pip install --no-cache-dir -r requirements.txt
-                '''
-            }
+    steps {
+        dir('/Users/shawnjoseph/.jenkins/workspace/selenium_test') {
+            sh '''
+                /usr/bin/python3 -m venv venv
+                source venv/bin/activate
+                pip install --no-cache-dir -r requirements.txt
+            '''
         }
+    }
+}
         stage('Run Selenium Tests') {
             steps {
                 sh '''
