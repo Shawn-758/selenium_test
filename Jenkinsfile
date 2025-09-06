@@ -1,36 +1,47 @@
 pipeline {
     agent any
-    tools {
-        // You must have Node.js and Git configured as tools in Jenkins
-        nodejs 'node16' 
-        git 'git'
-    }
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/Shawn-758/selenium_test'
+                git branch: 'main', url: 'https://github.com/Shawn-758/selenium_test.git'
             }
         }
-        stage('Install Dependencies') {
+        stage('Setup Environment') {
             steps {
-                sh 'npm install'
-            }
-        }
-        stage('Start Application') {
-            steps {
-                sh 'npm start &'
-                sh 'sleep 30'
+                sh '''
+                    # Install Node.js if it's not present (optional, but good practice)
+                    # This command is for a simple case and might need adjustment for your specific OS
+                    # e.g., using nvm, or yum install nodejs, or apt-get install nodejs
+                    # For a macOS machine:
+                    brew install nodejs
+
+                    # Navigate to the React app directory
+                    cd my-react-app
+
+                    # Install npm dependencies
+                    npm install
+                '''
             }
         }
         stage('Run Selenium Tests') {
             steps {
-                sh 'npx mocha selenium_tests.js'
+                sh '''
+                    # Navigate to the React app directory
+                    cd my-react-app
+
+                    # Start the React app in the background
+                    npm start &
+                    sleep 30
+
+                    # Run tests with Mocha
+                    npx mocha selenium_tests.js
+                '''
             }
         }
     }
     post {
         always {
-            // Kill the React app process to clean up after the build
+            // Ensure the app process is killed after the build
             sh 'pkill -f "npm start"'
         }
     }
