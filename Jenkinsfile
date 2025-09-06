@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/your-username/your-react-repo.git'
+                git branch: 'main', url: 'https://github.com/Shawn-758/selenium_test'
             }
         }
         stage('Install Dependencies') {
