@@ -14,7 +14,7 @@ pipeline {
         stage('Setup Environment') {
             steps {
                 // Installs Python 3.8 using pyenv. You can change this version.
-                sh '/Users/shawnjoseph/.pyenv/bin/pyenv install --skip-existing 3.8.10' 
+                sh '/usr/local/pyenv/bin/pyenv install --skip-existing 3.8.10' 
                 // Sets the local Python version for this directory
                 sh 'pyenv local 3.8.10'
                 // Installs the dependencies from your requirements file
