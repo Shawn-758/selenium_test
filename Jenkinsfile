@@ -13,9 +13,9 @@ pipeline {
         }
         stage('Setup Environment') {
     steps {
-        sh '/usr/local/pyenv/bin/pyenv install --skip-existing 3.8.10'
-        sh '/usr/local/pyenv/bin/pyenv local 3.8.10'
         dir('/Users/shawnjoseph/.jenkins/workspace/selenium_test') {
+            sh '/usr/local/pyenv/bin/pyenv install --skip-existing 3.8.10'
+            sh '/usr/local/pyenv/bin/pyenv local 3.8.10'
             sh '/Users/shawnjoseph/.pyenv/versions/3.8.10/bin/pip install --no-cache-dir -r requirements.txt'
         }
     }
