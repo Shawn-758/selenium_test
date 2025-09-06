@@ -12,15 +12,14 @@ pipeline {
             }
         }
         stage('Setup Environment') {
-            steps {
-                // Installs Python 3.8 using pyenv. You can change this version.
-                sh '/usr/local/pyenv/bin/pyenv install --skip-existing 3.8.10' 
-                // Sets the local Python version for this directory
-                sh '/usr/local/pyenv/bin/pyenv local 3.8.10'
-                // Installs the dependencies from your requirements file
-                sh '/Users/shawnjoseph/.pyenv/versions/3.8.10/bin/pip install --no-cache-dir -r requirements.txt'
-            }
+    steps {
+        sh '/usr/local/pyenv/bin/pyenv install --skip-existing 3.8.10'
+        sh '/usr/local/pyenv/bin/pyenv local 3.8.10'
+        dir('/Users/shawnjoseph/.jenkins/workspace/selenium_test') {
+            sh '/Users/shawnjoseph/.pyenv/versions/3.8.10/bin/pip install --no-cache-dir -r requirements.txt'
         }
+    }
+}
         stage('Run Selenium Tests') {
             steps {
                 // Execute the tests using the installed pytest
