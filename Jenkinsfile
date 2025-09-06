@@ -1,7 +1,7 @@
 pipeline {
     agent any
     tools {
-        git 'Default' 
+        git 'Default'
     }
     stages {
         stage('Checkout') {
@@ -12,7 +12,7 @@ pipeline {
         stage('Setup Environment') {
             steps {
                 dir('/Users/shawnjoseph/.jenkins/workspace/selenium_test') {
-                    sh '/usr/local/pyenv/bin/pyenv install --skip-existing 3.8.10'
+                    sh '/Users/shawnjoseph/.pyenv/bin/pyenv install --skip-existing 3.8.10'
                     sh '/Users/shawnjoseph/.pyenv/bin/pyenv local 3.8.10'
                     sh '/Users/shawnjoseph/.pyenv/versions/3.8.10/bin/pip install --no-cache-dir -r requirements.txt'
                 }
