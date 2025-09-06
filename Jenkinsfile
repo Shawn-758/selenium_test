@@ -1,8 +1,6 @@
 pipeline {
     agent any
     tools {
-        // You must configure a Git installation in Jenkins.
-        // As the error message suggested, "Default" is a good choice for the name.
         git 'Default' 
     }
     stages {
@@ -12,18 +10,17 @@ pipeline {
             }
         }
         stage('Setup Environment') {
-    steps {
-        dir('/Users/shawnjoseph/.jenkins/workspace/selenium_test') {
-            sh '/usr/local/pyenv/bin/pyenv install --skip-existing 3.8.10'
-            sh '/usr/local/pyenv/bin/pyenv local 3.8.10'
-            sh '/Users/shawnjoseph/.pyenv/versions/3.8.10/bin/pip install --no-cache-dir -r requirements.txt'
+            steps {
+                dir('/Users/shawnjoseph/.jenkins/workspace/selenium_test') {
+                    sh '/usr/local/pyenv/bin/pyenv install --skip-existing 3.8.10'
+                    sh '/usr/local/pyenv/bin/pyenv local 3.8.10'
+                    sh '/usr/local/pyenv/versions/3.8.10/bin/pip install --no-cache-dir -r requirements.txt'
+                }
+            }
         }
-    }
-}
         stage('Run Selenium Tests') {
             steps {
-                // Execute the tests using the installed pytest
-                sh 'pytest'
+                sh '/usr/local/pyenv/versions/3.8.10/bin/pytest'
             }
         }
     }
